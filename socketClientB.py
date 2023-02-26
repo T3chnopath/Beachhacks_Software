@@ -18,5 +18,5 @@ SOCK_PORTB = 65432
 client = Client(SOCK_HOSTB, SOCK_PORTB)
 
 while True:
-    for x in str(client.receive):
-        print(x) 
+    for line in str(client.receive()).split():
+        print(line)
