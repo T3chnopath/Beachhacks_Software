@@ -1,6 +1,6 @@
 from app import *
 
-CANVAS_SIZE = "1920x1080"
+CANVAS_SIZE = "400x400"
 CANVAS_COLOR = "black"
 
 if __name__ == "__main__":

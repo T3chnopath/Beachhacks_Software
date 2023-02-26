@@ -17,25 +17,26 @@ class App():
         self.canvas.pack(anchor="nw", fill="both", expand=1)
 
         #bind left click and mouse motion 
-        self.canvas.bind("<Button-1>", self.get_x_and_y)
-        self.canvas.bind("<B1-Motion>", self.draw_smth)
+        self.canvas.bind("<Button-1>", self.click)
+        self.canvas.bind("<B1-Motion>", self.draw)
 
         #initalize app 
         self.app.mainloop()
 
     #get position on left click
-    def get_x_and_y(self, event):
+    def click(self, event):
         global lasx, lasy
         lasx, lasy = event.x, event.y
 
     #draw based on mouse motion
-    def draw_smth(self, event):
+    def draw(self, event):
         global lasx, lasy
         self.canvas.create_line((lasx, lasy, event.x, event.y), 
                         fill='red', 
                         width=2)
         lasx, lasy = event.x, event.y
 
+        
 
 class Shape():
 
