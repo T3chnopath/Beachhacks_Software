@@ -11,12 +11,11 @@ class App():
     shapeBuf = None 
     shapes = []
     timeResolution = None
-    pollTime = None
 
     app = None
     canvas = None
 
-    def __init__(self, size, bg, timeResolution, host, port, pollTime):
+    def __init__(self, size, bg, timeResolution, host, port):
         
         #initialization
         self.app = Tk()
