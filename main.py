@@ -10,7 +10,7 @@ SOCK_PORTA = 65432  # The port used by the server
 SOCK_HOSTB = "192.168.43.128"
 SOCK_PORTB = 65432
 
-POLL_TIME = 1000
+POLL_TIME = 1500
 
 if __name__ == "__main__":
     App(CANVAS_SIZE, CANVAS_COLOR, CANVAS_TIME_RESOLUTION, \
