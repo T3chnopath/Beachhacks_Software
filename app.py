@@ -1,8 +1,7 @@
-from tkinter import *
+from tkinter import Tk, Canvas
 
 class App():
 
-    frame = None
     app = None
     canvas = None
 
@@ -28,5 +27,3 @@ class App():
                         fill='red', 
                         width=2)
         lasx, lasy = event.x, event.y
-
-App("400x400", "black")
