@@ -1,7 +1,8 @@
 from tkinter import Tk, Canvas, Button
 import math
 import time
-
+from multiprocessing import Process
+from multiprocessing import Value
 from socketClient import * 
 from bluetooth import *
 class App():
@@ -48,8 +49,12 @@ class App():
         self.app.mainloop()
 
     def checkServer(self):
-        #print(self.sock.receive())    
-        print("Check server")   
+        
+        data = Value('f', 0.0)
+        process = Process(target=self.sock.receive, args=(data, ))
+        process.start()
+        process.join(timeout=1)
+        print(data.value)
         self.app.after(self.pollTime, self.checkServer)
 
 

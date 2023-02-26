@@ -1,7 +1,7 @@
 # echo-client.py
-from multiprocessing import Process
 import socket
 import time
+from multiprocessing import Value
 
 class Client():
     
@@ -29,9 +29,8 @@ class Client():
         while True:
             time.sleep(1)
 
-    def receive(self):
-        p1 = Process(target=self.sock.recv, args=(1024))
-        p1.join(timeout=1)
-        print(p1)
+    def receive(self, data):
+        buf = self.sock.recv(1024)
+        data.value = data
 
    
