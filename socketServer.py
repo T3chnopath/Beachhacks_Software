@@ -2,8 +2,9 @@
 import socket               # Import socket module
 from threading import Thread
 import threading
+import time
 
-HOST = "127.0.0.1" # Get local machine name
+HOST = "192.168.43.128" # Get local machine name
 PORT = 65432                # Reserve a port for your service.
 
 class Server():
@@ -20,18 +21,24 @@ class Server():
         self.server.listen(5) 
 
     def handler(self, client, address):
+        
         with self.clients_lock:
             self.clients.add(client)
+            
             
         try:   
             while True:
                 data = client.recv(1024)
-                
+
                 if not data:
                     break
 
                 else:
-                    print(data)
+                    
+                    with self.clients_lock:
+                        for clients in self.clients:
+                            if(clients.getpeername() != client.getpeername()):
+                                clients.sendall(data)
                     
         finally:
             with self.clients_lock:

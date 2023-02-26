@@ -29,6 +29,7 @@ class App():
         self.canvas.bind("<Button-1>", self.left_click)
         self.canvas.bind("<ButtonRelease-1>", self.left_unclick)
         self.canvas.bind("<B1-Motion>", self.draw)
+        
 
         #Button to send commands to server
         btn = Button(self.app, text='Draw', width=10,
@@ -40,8 +41,12 @@ class App():
         self.timeResolution = timeResolution
         self.sock = Client(host, port)
 
-        #initalize app 
+        #initalize app
+        self.app
         self.app.mainloop()
+
+    def checkServer(sock):
+        
 
     #get position on left click
     def left_click(self, event):
