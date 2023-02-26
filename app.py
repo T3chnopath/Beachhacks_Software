@@ -76,19 +76,37 @@ class App():
         lenx = current[0] - last[0]
         leny = current[1] - last[1]
         
-        #divison, return 0 if divide by 0
-        divison = lenx and leny / lenx or 0
-        
-        #find angle and magnitude 
-        angle = math.atan(divison) * 180 / math.pi
+        #find angle
+        #divison = leny and lenx / leny or -1
+        angle = math.atan(lenx / leny) * 180 / math.pi
+        angle = abs(angle)
+
+        #quadrant 1
+        if lenx >= 0 and leny < 0:
+            theta = angle
+
+        #quadrant 2
+        elif lenx <= 0 and leny < 0:
+            theta = 360 - angle
+
+        #quadrant 3
+        elif lenx <= 0 and leny > 0:
+            theta = 180 + angle
+
+        #quadrant 4
+        elif lenx >= 0 and leny > 0:
+            theta = 180 - angle
+
+
+        #find magnitude 
         magnitude = math.sqrt(lenx**2 + leny**2)
 
-        #create line 
-        self.lineBuf.append(Line(angle, magnitude))
-        
+        #create line buf
+        self.lineBuf.append(Line(theta, magnitude))
 
     #enter when 
     def left_unclick(self, event):
+        self.lineBuf.append 
         shape = Shape(self.lineBuf)
         self.shapes.append(shape)
 

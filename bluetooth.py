@@ -21,12 +21,12 @@ class Bluetooth():
 
     def send(self, line):
         if BT_DEBUG:
+            print(line)
+
+        elif line:
             value = bytearray(line, "utf-8")
             self.ser.write(value)
 
-        else:
-            print(line)
-        
         time.sleep(self.delay)
         
     

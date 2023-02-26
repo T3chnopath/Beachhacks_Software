@@ -7,7 +7,7 @@ CANVAS_TIME_RESOLUTION = 0.01
 SOCK_HOST = "192.168.43.128"  # The server's hostname or IP address
 SOCK_PORT = 65432  # The port used by the serveri
 
-BT_DEBUG = True
+BT_DEBUG = False
 BT_COM = "COM10"
 BT_BAUDRATE = 9600
 BT_DELAY = 0.1

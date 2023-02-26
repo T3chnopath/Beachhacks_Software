@@ -24,16 +24,19 @@ class Server():
             firstFlag = 1
             message = []
             for lines in shapes[x].getVectors():
+
+                print(shapes[x].getVector())
                 
-                if firstFlag:
+                if firstFlag or lines == shapes[x].getVectors()[-1]:
                     temp = "[0, " + str(round(lines.angle, 3)), str(round(lines.magnitude, 3)) + "]"
                     message.append(", ".join(temp))
                     firstFlag = 0
+
                 else:
                     temp = "[1, " + str(round(lines.angle, 3)), str(round(lines.magnitude, 3)) + "]"
                     message.append(", ".join(temp))
 
-        
+
         byteMessage = bytes((''.join(message)), "utf-8")
         self.conn.sendall(byteMessage)
 
