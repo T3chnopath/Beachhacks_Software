@@ -84,11 +84,12 @@ class Line():
     angle = None    
     magnitude = None
 
-    #initilize 
+    #initilization
     def __init__(self, angle, magnitude):
         self.angle = angle
         self.magnitude = magnitude
 
+    #getter function
     def angle(self):
         return self.angle
 
@@ -99,6 +100,7 @@ class Shape():
     start = []
     _vectors = []
 
+    #initalization
     def __init__(self, lines):
         for x in lines:
             self._vectors.append(x)
