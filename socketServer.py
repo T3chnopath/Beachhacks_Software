@@ -19,16 +19,37 @@ class Server:
 #!/usr/bin/python           # This is server.py file                                                                                                                                                                           
 
 import socket               # Import socket module
-import _thread as thread
+from threading import Thread
+import threading
 
-def on_new_client(clientsocket,addr):
+clients = set()
+clients_lock = threading.Lock()
+
+def on_new_client(client,addr):
+    '''
     while True:
         msg = clientsocket.recv(1024)
         #do some checks and if msg == someWeirdSignal: break:
-        print(msg)
         #Maybe some code to compute the last digit of PI, play game or anything else can go here and when you are done.
         clientsocket.send(msg)
     clientsocket.close()
+    '''
+    with clients_lock:
+        clients.add(client)
+    try:    
+        while True:
+            data = client.recv(1024)
+            print(data)
+            if not data:
+                break
+            else:
+                
+                with clients_lock:
+                    for c in clients:
+                        c.sendall(data)
+    finally:
+        with clients_lock:
+            clients.remove(client)
 
 s = socket.socket()         # Create a socket object
 host = "127.0.0.1" # Get local machine name
@@ -42,8 +63,9 @@ s.listen(5)                 # Now wait for client connection.
 
 #print 'Got connection from', addr
 while True:
-   c, addr = s.accept()     # Establish connection with client.
-   thread.start_new_thread(on_new_client,(c,addr))
+   host, port = s.accept()     # Establish connection with client.
+   #thread.start_new_thread(on_new_client,(c,addr))
+   Thread(target=on_new_client, args = (host,port)).start()
    #Note it's (addr,) not (addr) because second parameter is a tuple
    #Edit: (c,addr)
    #that's how you pass arguments to functions when creating new threads using thread module.

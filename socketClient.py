@@ -12,11 +12,12 @@ class Client():
     def sendToServer(self, shapes):
         
         for x in range(0, len(shapes)):
+            firstFlag = 1
             for lines in shapes[x].getVectors():
 
-                if x == 0:
+                if firstFlag:
                     message = ["[0, " + str(lines.angle), str(lines.magnitude) + "],"] 
-                
+                    firstFlag = 0
                 else:
                     message = ["[1, " + str(lines.angle), str(lines.magnitude) + "],"] 
                     
