@@ -97,7 +97,6 @@ class Line():
         return self.magnitude
 
 class Shape():
-    start = []
     _vectors = []
 
     #initalization
@@ -105,5 +104,6 @@ class Shape():
         for x in lines:
             self._vectors.append(x)
 
+    #getter function
     def getVectors(self):
         return self._vectors
