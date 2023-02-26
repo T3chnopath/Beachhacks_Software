@@ -2,8 +2,7 @@
 import socket               # Import socket module
 import time
 
-HOST = "192.168.43.128" # Get local machine name
-PORT = 65432                # Reserve a port for your service.
+from main import *
 
 class Server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

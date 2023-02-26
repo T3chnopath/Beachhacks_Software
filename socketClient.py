@@ -1,11 +1,6 @@
 import socket
 from bluetooth import *
-
-SOCK_HOSTB = "192.168.43.128"
-SOCK_PORTB = 65432
-
-BT_COM = "COM10"
-BT_BAUDRATE = 9600
+from main import * 
 
 class Client():
     
@@ -17,8 +12,8 @@ class Client():
     def receive(self):
         return(self.sock.recv(1024))
 
-client = Client(SOCK_HOSTB, SOCK_PORTB)
-bluetooth = Bluetooth(BT_COM, BT_BAUDRATE)
+client = Client(SOCK_HOST, SOCK_PORT)
+bluetooth = Bluetooth(BT_COM, BT_BAUDRATE, BT_DELAY)
 
 while True:
     for line in str(client.receive()).split():

@@ -3,6 +3,7 @@ import math
 import time
 from socketServer import * 
 from bluetooth import *
+
 class App():
     sock = None
 
@@ -15,7 +16,7 @@ class App():
     app = None
     canvas = None
 
-    def __init__(self, size, bg, timeResolution, host, port):
+    def __init__(self, size, bg, timeResolution):
         
         #initialization
         self.app = Tk()
@@ -37,7 +38,7 @@ class App():
     
         #set time resolution
         self.timeResolution = timeResolution
-        self.sock = Server(host, port)
+        self.sock = Server(SOCK_HOST, SOCK_PORT)
 
         #initalize app
         self.app.mainloop()
@@ -72,41 +73,19 @@ class App():
 
     def createLine(self, last, current):
         #grab offset movement
-        x1, y1 = last
-        x2, y2 = current.x, current.event.y
-
-        lenx = x2 - x1
-        leny = y2 - y1
-
-        #find angle
-        angle = math.atan(math.abs(divison)) * 180 / math.pi
-
-
-        #quadrant 1
-        if lenx >= 0 and leny < 0:
-            theta = angle
-
-        #quadrant 2
-        elif lenx <= 0 and leny < 0:
-            theta = 360 - angle
-
-        #quadrant 3
-        elif lenx <= 0 and leny > 0:
-            theta = 180 + angle
-
-        #quadrant 4
-        elif lenx >= 0 and leny > 0:
-            theta = 180 - angle
-
+        lenx = current[0] - last[0]
+        leny = current[1] - last[1]
+        
         #divison, return 0 if divide by 0
-        divison = leny and lenx / leny or 0
-
-        #find magnitude 
+        divison = lenx and leny / lenx or 0
+        
+        #find angle and magnitude 
+        angle = math.atan(divison) * 180 / math.pi
         magnitude = math.sqrt(lenx**2 + leny**2)
 
         #create line 
-        self.lineBuf.append(Line(theta, magnitude))
-
+        self.lineBuf.append(Line(angle, magnitude))
+        
 
     #enter when 
     def left_unclick(self, event):
