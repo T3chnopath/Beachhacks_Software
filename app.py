@@ -52,6 +52,7 @@ class App():
         self.app.mainloop()
 
     def checkServer(self):
+        print("in check server")
         print(self.sock.receive())
 
 

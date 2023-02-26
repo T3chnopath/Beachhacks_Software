@@ -31,17 +31,19 @@ class Server():
             while True:
             
                 data = client.recv(1024)
-
+                print(data)
                 if not data:
                     break
-
+                
+                '''
                 else:
                     
                     with self.clients_lock:
                         for clients in self.clients:
                             if(clients.getpeername() != client.getpeername()):
                                 clients.sendall(data)
-
+                            clients.sendall(data)
+                '''
                         
                     
         finally:
