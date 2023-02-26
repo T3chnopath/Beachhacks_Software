@@ -1,8 +1,11 @@
-# echo-client.py
 import socket
+from bluetooth import *
 
 SOCK_HOSTB = "192.168.43.128"
 SOCK_PORTB = 65432
+
+BT_COM = "COM10"
+BT_BAUDRATE = 9600
 
 class Client():
     
@@ -15,7 +18,8 @@ class Client():
         return(self.sock.recv(1024))
 
 client = Client(SOCK_HOSTB, SOCK_PORTB)
+bluetooth = Bluetooth(BT_COM, BT_BAUDRATE)
 
 while True:
     for line in str(client.receive()).split():
-        print(line)
+        bluetooth.send(line)
