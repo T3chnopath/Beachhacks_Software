@@ -1,0 +1,1 @@
+python socketServerA.py | python main.py

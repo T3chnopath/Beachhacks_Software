@@ -3,7 +3,7 @@ import math
 import time
 from multiprocessing import Process
 from multiprocessing import Value
-from socketClient import * 
+from socketClientA import * 
 from bluetooth import *
 class App():
     sock = None
