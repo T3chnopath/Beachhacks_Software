@@ -10,10 +10,9 @@ class Bluetooth():
 
         self.ser = serial.Serial(port=COM, baudrate=baudrate)
 
-    def send(self, shapes):
-        for shape in shapes:
-            for lines in shape.getVectors():
-                print(lines.angle, lines.magnitude)
-                self.ser.write("test!")
-
+    def send(self, line):
+        value = bytearray(line, "utf-8")
+        print(line)
+        self.ser.write(value)
+        
     

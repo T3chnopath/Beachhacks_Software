@@ -1,36 +1,25 @@
-# echo-client.py
 import socket
-import time
-from multiprocessing import Value
+from bluetooth import *
+
+SOCK_HOSTB = "192.168.43.128"
+SOCK_PORTB = 65432
+
+BT_COM = "COM10"
+BT_BAUDRATE = 9600
 
 class Client():
     
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    
+
     def __init__(self, HOST, PORT):
         self.sock.connect((HOST, PORT))
 
-    def sendToServer(self, shapes):
-        print("in send to Serveer") 
-        for x in range(0, len(shapes)):
-            firstFlag = 1
-            for lines in shapes[x].getVectors():
+    def receive(self):
+        return(self.sock.recv(1024))
 
-                if firstFlag:
-                    message = ["[0, " + str(lines.angle), str(lines.magnitude) + "],"] 
-                    firstFlag = 0
-                else:
-                    message = ["[1, " + str(lines.angle), str(lines.magnitude) + "],"] 
+client = Client(SOCK_HOSTB, SOCK_PORTB)
+bluetooth = Bluetooth(BT_COM, BT_BAUDRATE)
 
-                byteMessage = bytes((', '.join(message)), "utf-8")
-                self.sock.send(byteMessage)
-
-    def inc_forever(self):
-        while True:
-            time.sleep(1)
-
-    def receive(self, data):
-        buf = self.sock.recv(1024)
-        data.value = data
-
-   
+while True:
+    for line in str(client.receive()).split():
+        bluetooth.send(line)

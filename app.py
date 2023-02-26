@@ -1,9 +1,7 @@
 from tkinter import Tk, Canvas, Button
 import math
 import time
-from multiprocessing import Process
-from multiprocessing import Value
-from socketClient import * 
+from socketServer import * 
 from bluetooth import *
 class App():
     sock = None
@@ -13,12 +11,11 @@ class App():
     shapeBuf = None 
     shapes = []
     timeResolution = None
-    pollTime = None
 
     app = None
     canvas = None
 
-    def __init__(self, size, bg, timeResolution, host, port, pollTime):
+    def __init__(self, size, bg, timeResolution, host, port):
         
         #initialization
         self.app = Tk()
@@ -34,28 +31,16 @@ class App():
         
 
         #Button to send commands to server
-        btn = Button(self.app, text='Draw', width=10,
-             height=5, bd='10', command=self.send)
- 
-        btn.place(x=0, y=100)
-
+        btnDraw = Button(self.app, text='Send', width=10,
+             height=2, bd='10', command=self.send)
+        btnDraw.place(x=0, y=340)
+    
         #set time resolution
         self.timeResolution = timeResolution
-        self.sock = Client(host, port)
+        self.sock = Server(host, port)
 
         #initalize app
-        self.pollTime = pollTime
-        self.checkServer()
         self.app.mainloop()
-
-    def checkServer(self):
-        
-        data = Value('f', 0.0)
-        process = Process(target=self.sock.receive, args=(data, ))
-        process.start()
-        process.join(timeout=1)
-        print(data.value)
-        self.app.after(self.pollTime, self.checkServer)
 
 
     #get position on left click
@@ -107,7 +92,7 @@ class App():
         self.shapes.append(shape)
 
     def send(self):
-        self.sock.sendToServer(self.shapes)
+        self.sock.sendToClient(self.shapes)
 
 class Line():
     angle = None    
