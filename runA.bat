@@ -1,1 +1,1 @@
-python socketServerA.py | python main.py
+python main.py | python socketServerA.py
