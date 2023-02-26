@@ -14,7 +14,7 @@ class Client():
 
 
 SOCK_HOSTB = "192.168.43.128"
-SOCK_PORTB = "65432"
+SOCK_PORTB = 65432
 client = Client(SOCK_HOSTB, SOCK_PORTB)
 
 while True:
