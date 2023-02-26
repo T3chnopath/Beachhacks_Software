@@ -21,14 +21,15 @@ class Server():
         self.server.listen(5) 
 
     def handler(self, client, address):
-        
+        print("Client connected") 
+       
         with self.clients_lock:
             self.clients.add(client)
             
             
         try:   
             while True:
-                
+            
                 data = client.recv(1024)
 
                 if not data:
@@ -40,6 +41,8 @@ class Server():
                         for clients in self.clients:
                             if(clients.getpeername() != client.getpeername()):
                                 clients.sendall(data)
+
+                        
                     
         finally:
             with self.clients_lock:

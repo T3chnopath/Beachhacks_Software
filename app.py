@@ -34,10 +34,14 @@ class App():
         
 
         #Button to send commands to server
-        btn = Button(self.app, text='Draw', width=10,
+        btnDraw = Button(self.app, text='Send', width=10,
              height=5, bd='10', command=self.send)
- 
-        btn.place(x=0, y=100)
+        btnDraw.place(x=0, y=100)
+    
+        btnPoll = Button(self.app, text='Receive', width=10,
+             height=5, bd='10', command=self.send)
+        btnPoll.place(x=200, y=100)
+
 
         #set time resolution
         self.timeResolution = timeResolution
@@ -45,17 +49,10 @@ class App():
 
         #initalize app
         self.pollTime = pollTime
-        self.checkServer()
         self.app.mainloop()
 
     def checkServer(self):
-        
-        data = Value('f', 0.0)
-        process = Process(target=self.sock.receive, args=(data, ))
-        process.start()
-        process.join(timeout=1)
-        print(data.value)
-        self.app.after(self.pollTime, self.checkServer)
+        print(self.sock.receive())
 
 
     #get position on left click

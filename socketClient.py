@@ -11,7 +11,7 @@ class Client():
         self.sock.connect((HOST, PORT))
 
     def sendToServer(self, shapes):
-        print("in send to Serveer") 
+        print("in send to Server") 
         for x in range(0, len(shapes)):
             firstFlag = 1
             for lines in shapes[x].getVectors():
@@ -29,8 +29,7 @@ class Client():
         while True:
             time.sleep(1)
 
-    def receive(self, data):
-        buf = self.sock.recv(1024)
-        data.value = data
+    def receive(self):
+        return(self.sock.recv(1024))
 
    
