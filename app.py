@@ -1,4 +1,5 @@
 from tkinter import Tk, Canvas
+import math
 import numpy as np
 
 class App():
@@ -40,8 +41,19 @@ class App():
         self.canvas.create_line((lasx, lasy, event.x, event.y), 
                         fill='red', 
                         width=2)
+        #print(lasx, lasy, event.x, event.y)
+        self.getVector([lasx, lasy], [event.x, event.y])
         lasx, lasy = event.x, event.y
-        self.coordinates.append([event.x, event.y]) 
+        #self.coordinates.append([event.x, event.y])
+
+
+    def createShape(self, last, current):
+        #grab offset movement
+        lenx = current[0] - last[0]
+        leny = current[1] - last[1]
+
+        magnitude = math.sqrt(lenx**2 + leny**2)
+        vector = 
 
 class Shape():
 
