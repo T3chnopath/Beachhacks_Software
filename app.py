@@ -39,7 +39,7 @@ class App():
         btnDraw.place(x=0, y=100)
     
         btnPoll = Button(self.app, text='Receive', width=10,
-             height=5, bd='10', command=self.send)
+             height=5, bd='10', command=self.checkServer)
         btnPoll.place(x=200, y=100)
 
 
