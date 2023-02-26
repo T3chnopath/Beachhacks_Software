@@ -1,1 +1,1 @@
-python socketClientB.py
+python socketClient.py

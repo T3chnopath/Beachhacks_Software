@@ -1,9 +1,7 @@
 from tkinter import Tk, Canvas, Button
 import math
 import time
-from multiprocessing import Process
-from multiprocessing import Value
-from socketClientA import * 
+from socketServer import * 
 from bluetooth import *
 class App():
     sock = None
@@ -38,23 +36,13 @@ class App():
              height=2, bd='10', command=self.send)
         btnDraw.place(x=0, y=340)
     
-        btnPoll = Button(self.app, text='Receive', width=10,
-             height=2, bd='10', command=self.checkServer)
-        btnPoll.place(x=300, y=340)
-        
-
-
         #set time resolution
         self.timeResolution = timeResolution
-        self.sock = Client(host, port)
+        self.sock = Server(host, port)
 
         #initalize app
         self.pollTime = pollTime
         self.app.mainloop()
-
-    def checkServer(self):
-        print("in check server")
-        print(self.sock.receive())
 
 
     #get position on left click
