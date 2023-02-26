@@ -28,6 +28,7 @@ class Server():
             
         try:   
             while True:
+                
                 data = client.recv(1024)
 
                 if not data:

@@ -48,8 +48,9 @@ class App():
         self.app.mainloop()
 
     def checkServer(self):
-        print(self.sock.recive)
-        self.app.after(self.pollTime)
+        #print(self.sock.receive())    
+        print("Check server")   
+        self.app.after(self.pollTime, self.checkServer)
 
 
     #get position on left click
