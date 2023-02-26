@@ -12,11 +12,12 @@ class App():
     shapeBuf = None 
     shapes = []
     timeResolution = None
+    pollTime = None
 
     app = None
     canvas = None
 
-    def __init__(self, size, bg, timeResolution, host, port):
+    def __init__(self, size, bg, timeResolution, host, port, pollTime):
         
         #initialization
         self.app = Tk()
@@ -42,11 +43,14 @@ class App():
         self.sock = Client(host, port)
 
         #initalize app
-        self.app
+        self.pollTime = pollTime
+        self.checkServer()
         self.app.mainloop()
 
-    def checkServer(sock):
-        
+    def checkServer(self):
+        print(self.sock.recive)
+        self.app.after(self.pollTime)
+
 
     #get position on left click
     def left_click(self, event):

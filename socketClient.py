@@ -24,6 +24,9 @@ class Client():
                 byteMessage = bytes((', '.join(message)), "utf-8")
                 self.sock.send(byteMessage)
 
+    def recive(self):
+        data = self.sock.recv(1024)
+        return(data)
 
 
    
