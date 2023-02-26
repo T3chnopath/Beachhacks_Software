@@ -10,6 +10,7 @@ class App():
     def __init__(self, size, bg):
         
         #initialization
+        self.coordinates = []
         self.app = Tk()
         self.app.geometry(size)
         
@@ -17,16 +18,21 @@ class App():
         self.canvas.pack(anchor="nw", fill="both", expand=1)
 
         #bind left click and mouse motion 
-        self.canvas.bind("<Button-1>", self.click)
+        self.canvas.bind("<Button-1>", self.left_click)
+        self.canvas.bind("<ButtonRelease-1>", self.left_unclick)
         self.canvas.bind("<B1-Motion>", self.draw)
 
         #initalize app 
         self.app.mainloop()
 
     #get position on left click
-    def click(self, event):
+    def left_click(self, event):
         global lasx, lasy
         lasx, lasy = event.x, event.y
+
+    #enter when 
+    def left_unclick(self, event):
+        self.coordinates.clear()
 
     #draw based on mouse motion
     def draw(self, event):
@@ -35,8 +41,7 @@ class App():
                         fill='red', 
                         width=2)
         lasx, lasy = event.x, event.y
-
-        
+        self.coordinates.append([event.x, event.y]) 
 
 class Shape():
 
