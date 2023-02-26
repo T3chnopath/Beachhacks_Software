@@ -40,7 +40,6 @@ class App():
         self.sock = Server(host, port)
 
         #initalize app
-        self.pollTime = pollTime
         self.app.mainloop()
 
 
@@ -93,7 +92,7 @@ class App():
         self.shapes.append(shape)
 
     def send(self):
-        self.sock.sendToServer(self.shapes)
+        self.sock.sendToClient(self.shapes)
 
 class Line():
     angle = None    

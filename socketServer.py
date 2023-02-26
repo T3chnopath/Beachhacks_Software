@@ -34,14 +34,7 @@ class Server():
                     temp = "[1, " + str(round(lines.angle, 3)), str(round(lines.magnitude, 3)) + "]"
                     message.append(", ".join(temp))
 
-            byteMessage = bytes((''.join(message)), "utf-8")
-            self.server.send(byteMessage)
-
-if __name__ == "__main__":
-    
-    server = Server(HOST, PORT)
-    
-    while True:
-        server.sendToClient("test")
-        time.sleep(1)
+        
+        byteMessage = bytes((''.join(message)), "utf-8")
+        self.conn.sendall(byteMessage)
 
