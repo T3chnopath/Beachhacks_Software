@@ -1,17 +1,19 @@
 from tkinter import Tk, Canvas
 import math
 import numpy as np
-
+import time
 class App():
 
-    coordinates = []
+    canvasClear = True
+    lineBuf = []
+    shapeBuf = None 
+    shapes = []  
     app = None
     canvas = None
 
     def __init__(self, size, bg):
         
         #initialization
-        self.coordinates = []
         self.app = Tk()
         self.app.geometry(size)
         
@@ -33,7 +35,9 @@ class App():
 
     #enter when 
     def left_unclick(self, event):
-        self.coordinates.clear()
+        shape = Shape(self.lineBuf)
+        self.shapes.append(shape)
+
 
     #draw based on mouse motion
     def draw(self, event):
@@ -41,23 +45,54 @@ class App():
         self.canvas.create_line((lasx, lasy, event.x, event.y), 
                         fill='red', 
                         width=2)
-        #print(lasx, lasy, event.x, event.y)
-        self.getVector([lasx, lasy], [event.x, event.y])
+        
+        if(self.canvasClear):
+            self.createLine([0, 0], [event.x, event.y])
+            self.canvasClear = False
+            print("Added Start!!!!!!!!!!!!!!!!!!!!!!1")
+            print(self.lineBuf[0].angle, self.lineBuf[0].magnitude)
+        
+        else:
+            self.createLine([lasx, lasy], [event.x, event.y])    
         lasx, lasy = event.x, event.y
-        #self.coordinates.append([event.x, event.y])
+        time.sleep(0.01)
 
-
-    def createShape(self, last, current):
+    def createLine(self, last, current):
         #grab offset movement
         lenx = current[0] - last[0]
         leny = current[1] - last[1]
-
+        
+        #divison, return 0 if divide by 0
+        divison = leny and lenx / leny or 0
+        
+        #find angle and magnitude 
+        angle = math.atan(divison) * 180 / math.pi
         magnitude = math.sqrt(lenx**2 + leny**2)
-        vector = 
+
+        #create line 
+        self.lineBuf.append(Line(angle, magnitude))
+
+class Line():
+
+    angle = None    
+    magnitude = None
+
+    #initilize 
+    def __init__(self, angle, magnitude):
+        self.angle = angle
+        self.magnitude = magnitude
+
+    def angle(self):
+        return self.angle
+
+    def magnitude(self):
+        return self.magnitude
 
 class Shape():
+    ANGLE_THRESH = 1
+    MAGNITUDE_THRESH = 1
+    start = []
+    vectors = []
 
-    vector = None    
-
-    def __init__(self, vector):
-       self.vector = vector 
+    def __init__(self, lines):
+       
