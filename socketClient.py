@@ -17,4 +17,5 @@ bluetooth = Bluetooth(BT_COM, BT_BAUDRATE, BT_DELAY)
 
 while True:
     for line in str(client.receive()).split():
-        bluetooth.send(line)
+        if(line):
+            bluetooth.send(line)
