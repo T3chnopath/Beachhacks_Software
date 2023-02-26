@@ -56,7 +56,7 @@ class App():
                         width=2)
 
         #if first point, create offset from bot start coordinate 
-        if(self.canvasClear):
+        if self.canvasClear:
             self.createLine([0, 0], [event.x, event.y])
             self.canvasClear = False
 
@@ -72,18 +72,32 @@ class App():
 
     def createLine(self, last, current):
         #grab offset movement
-        lenx = current[0] - last[0]
-        leny = current[1] - last[1]
+        x1, y1 = last
+        x2, y2 = current.x, current.event.y
+
+        lenx = x2 - x1
+        leny = y2 - y1
+
+        #find angle
+        angle = math.atan(math.abs(divison)) * 180 / math.pi
+
+        if lenx <= 0 and leny < 0:
+            theta = 360 - angle
+
+        elif lenx <= 0 and leny > 0:
+            theta = 180 + angle
         
+        else:
+            theta = angle
+
         #divison, return 0 if divide by 0
         divison = leny and lenx / leny or 0
-        
-        #find angle and magnitude 
-        angle = math.atan(divison) * 180 / math.pi
+
+        #find magnitude 
         magnitude = math.sqrt(lenx**2 + leny**2)
 
         #create line 
-        self.lineBuf.append(Line(angle, magnitude))
+        self.lineBuf.append(Line(theta, magnitude))
 
 
     #enter when 
