@@ -81,14 +81,22 @@ class App():
         #find angle
         angle = math.atan(math.abs(divison)) * 180 / math.pi
 
-        if lenx <= 0 and leny < 0:
+
+        #quadrant 1
+        if lenx >= 0 and leny < 0:
+            theta = angle
+
+        #quadrant 2
+        elif lenx <= 0 and leny < 0:
             theta = 360 - angle
 
+        #quadrant 3
         elif lenx <= 0 and leny > 0:
             theta = 180 + angle
-        
-        else:
-            theta = angle
+
+        #quadrant 4
+        elif lenx >= 0 and leny > 0:
+            theta = 180 - angle
 
         #divison, return 0 if divide by 0
         divison = leny and lenx / leny or 0
