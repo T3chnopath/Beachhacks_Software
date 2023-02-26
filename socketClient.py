@@ -10,10 +10,16 @@ class Client():
         self.sock.connect((HOST, PORT))
 
     def sendToServer(self, shapes):
+        
+        for x in range(0, len(shapes)):
+            for lines in shapes[x].getVectors():
 
-        for shape in shapes:
-            for lines in shape.getVectors():
-                message = ["[" + str(lines.angle), str(lines.magnitude) + "],"] 
+                if x == 0:
+                    message = ["[0, " + str(lines.angle), str(lines.magnitude) + "],"] 
+                
+                else:
+                    message = ["[1, " + str(lines.angle), str(lines.magnitude) + "],"] 
+                    
                 byteMessage = bytes((', '.join(message)), "utf-8")
                 self.sock.send(byteMessage)
 
