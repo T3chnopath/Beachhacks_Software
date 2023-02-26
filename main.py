@@ -8,7 +8,7 @@ SOCK_HOSTA = "192.168.43.128"  # The server's hostname or IP address
 SOCK_PORTA = 65432  # The port used by the server
 
 SOCK_HOSTB = "192.168.43.128"
-SOCK_HOSTB = 65432
+SOCK_PORTB = 65432
 
 POLL_TIME = 1000
 
