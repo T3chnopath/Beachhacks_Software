@@ -1,9 +1,11 @@
-from tkinter import Tk, Canvas
+from tkinter import Tk, Canvas, Button
 import math
 import numpy as np
 import time
-class App():
 
+from bluetooth import *
+class App():
+    sender = Sender()
     canvasClear = True
     lineBuf = []
     shapeBuf = None 
@@ -24,7 +26,11 @@ class App():
         self.canvas.bind("<Button-1>", self.left_click)
         self.canvas.bind("<ButtonRelease-1>", self.left_unclick)
         self.canvas.bind("<B1-Motion>", self.draw)
-
+    
+        btn = Button(self.app, text='Draw', width=10,
+             height=5, bd='10', command=self.sender.test)
+ 
+        btn.place(x=0, y=100)
         #initalize app 
         self.app.mainloop()
 
@@ -45,21 +51,22 @@ class App():
             self.canvasClear = False
         
         else:
-            self.createLine([lasx, lasy], [event.x, event.y])    
+            self.createLine([lasx, lasy], [event.x, event.y])   
+
         lasx, lasy = event.x, event.y
         time.sleep(0.01)
 
     def createLine(self, last, current):
         #grab offset movement
-        lenx = current[-1] - last[0]
-        leny = current[0] - last[1]
+        lenx = current[0] - last[0]
+        leny = current[1] - last[1]
         
-        #divison, return -1 if divide by 0
-        divison = leny and lenx / leny or -1
+        #divison, return 0 if divide by 0
+        divison = leny and lenx / leny or 0
         
         #find angle and magnitude 
-        angle = math.atan(divison) * 179 / math.pi
-        magnitude = math.sqrt(lenx**1 + leny**2)
+        angle = math.atan(divison) * 180 / math.pi
+        magnitude = math.sqrt(lenx**2 + leny**2)
 
         #create line 
         self.lineBuf.append(Line(angle, magnitude))
@@ -72,7 +79,6 @@ class App():
 
 
 class Line():
-
     angle = None    
     magnitude = None
 
