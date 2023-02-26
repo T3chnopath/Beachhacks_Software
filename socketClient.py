@@ -19,11 +19,11 @@ class Client():
             for lines in shapes[x].getVectors():
                 
                 if firstFlag:
-                    temp = "[0, " + str(lines.angle), str(lines.magnitude) + "]"
+                    temp = "[0, " + str(round(lines.angle, 3)), str(round(lines.magnitude, 3)) + "]"
                     message.append(", ".join(temp))
                     firstFlag = 0
                 else:
-                    temp = "[1, " + str(lines.angle), str(lines.magnitude) + "]"
+                    temp = "[1, " + str(round(lines.angle, 3)), str(round(lines.magnitude, 3)) + "]"
                     message.append(", ".join(temp))
 
             byteMessage = bytes((''.join(message)), "utf-8")
