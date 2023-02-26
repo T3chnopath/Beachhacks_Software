@@ -118,9 +118,12 @@ class Line():
     magnitude = None
 
     #initilization
-    def __init__(self, angle, magnitude):
+    def __init__(self, angle, magnitude_unitless):
         self.angle = angle
-        self.magnitude = magnitude
+        res = BOT_STEPS_360 / BOT_CIRCUMFERENCE
+
+        #magnitude in steps
+        self.magnitude = magnitude_unitless / res
 
     #getter function
     def angle(self):
