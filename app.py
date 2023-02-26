@@ -1,36 +1,45 @@
 from tkinter import Tk, Canvas, Button
 import math
-import numpy as np
 import time
 
+from socketClient import * 
 from bluetooth import *
 class App():
-    bluetooth = Bluetooth()
+    sock = None
+
     canvasClear = True
     lineBuf = []
     shapeBuf = None 
     shapes = []
+    timeResolution = None
+
     app = None
     canvas = None
 
-    def __init__(self, size, bg):
+    def __init__(self, size, bg, timeResolution, host, port):
         
         #initialization
         self.app = Tk()
         self.app.geometry(size)
         
         self.canvas = Canvas(self.app, bg=bg)
-        self.canvas.pack(anchor="nw", fill="both", expand=1)
+        self.canvas.pack(anchor="nw", fill="both", expand=1), 
 
         #bind left click and mouse motion 
         self.canvas.bind("<Button-1>", self.left_click)
         self.canvas.bind("<ButtonRelease-1>", self.left_unclick)
         self.canvas.bind("<B1-Motion>", self.draw)
-    
+
+        #Button to send commands to server
         btn = Button(self.app, text='Draw', width=10,
              height=5, bd='10', command=self.send)
  
         btn.place(x=0, y=100)
+
+        #set time resolution
+        self.timeResolution = timeResolution
+        self.sock = Client(host, port)
+
         #initalize app 
         self.app.mainloop()
 
@@ -45,16 +54,21 @@ class App():
         self.canvas.create_line((lasx, lasy, event.x, event.y), 
                         fill='red', 
                         width=2)
-        
+
+        #if first point, create offset from bot start coordinate 
         if(self.canvasClear):
             self.createLine([0, 0], [event.x, event.y])
             self.canvasClear = False
-        
+
+        #else, operate based on first and last point 
         else:
             self.createLine([lasx, lasy], [event.x, event.y])   
 
+        #update last x and y variable
         lasx, lasy = event.x, event.y
-        time.sleep(0.01)
+        
+        #update based on bot resolution
+        time.sleep(self.timeResolution)
 
     def createLine(self, last, current):
         #grab offset movement
@@ -78,7 +92,7 @@ class App():
         self.shapes.append(shape)
 
     def send(self):
-        self.bluetooth.send(self.shapes)
+        self.sock.sendToServer(self.shapes)
 
 class Line():
     angle = None    
