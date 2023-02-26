@@ -5,11 +5,11 @@ import time
 
 from bluetooth import *
 class App():
-    sender = Sender()
+    bluetooth = Bluetooth()
     canvasClear = True
     lineBuf = []
     shapeBuf = None 
-    shapes = []  
+    shapes = []
     app = None
     canvas = None
 
@@ -28,7 +28,7 @@ class App():
         self.canvas.bind("<B1-Motion>", self.draw)
     
         btn = Button(self.app, text='Draw', width=10,
-             height=5, bd='10', command=self.sender.test)
+             height=5, bd='10', command=self.send)
  
         btn.place(x=0, y=100)
         #initalize app 
@@ -77,6 +77,8 @@ class App():
         shape = Shape(self.lineBuf)
         self.shapes.append(shape)
 
+    def send(self):
+        self.bluetooth.send(self.shapes)
 
 class Line():
     angle = None    
@@ -95,7 +97,11 @@ class Line():
 
 class Shape():
     start = []
-    vectors = []
+    _vectors = []
 
     def __init__(self, lines):
-        self.vectors.append(lines)
+        for x in lines:
+            self._vectors.append(x)
+
+    def getVectors(self):
+        return self._vectors
