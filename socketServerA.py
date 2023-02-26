@@ -19,11 +19,23 @@ class Server():
         self.server.listen()
         self.conn, self.addr = self.server.accept() 
 
-    def sendToClient(self, data):
-        self.conn.sendall(bytes(data, "utf-8"))
-    
-    def getServer(self):
-        return self.server
+    def sendToClient(self, shapes):
+        finalMessage = []
+        for x in range(0, len(shapes)):
+            firstFlag = 1
+            message = []
+            for lines in shapes[x].getVectors():
+                
+                if firstFlag:
+                    temp = "[0, " + str(round(lines.angle, 3)), str(round(lines.magnitude, 3)) + "]"
+                    message.append(", ".join(temp))
+                    firstFlag = 0
+                else:
+                    temp = "[1, " + str(round(lines.angle, 3)), str(round(lines.magnitude, 3)) + "]"
+                    message.append(", ".join(temp))
+
+            byteMessage = bytes((''.join(message)), "utf-8")
+            self.server.send(byteMessage)
 
 if __name__ == "__main__":
     
