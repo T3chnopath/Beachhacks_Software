@@ -35,12 +35,13 @@ class App():
 
         #Button to send commands to server
         btnDraw = Button(self.app, text='Send', width=10,
-             height=5, bd='10', command=self.send)
-        btnDraw.place(x=0, y=100)
+             height=2, bd='10', command=self.send)
+        btnDraw.place(x=0, y=340)
     
         btnPoll = Button(self.app, text='Receive', width=10,
-             height=5, bd='10', command=self.checkServer)
-        btnPoll.place(x=200, y=100)
+             height=2, bd='10', command=self.checkServer)
+        btnPoll.place(x=300, y=340)
+        
 
 
         #set time resolution

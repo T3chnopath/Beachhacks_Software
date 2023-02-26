@@ -2,7 +2,7 @@ from app import *
 
 CANVAS_SIZE = "400x400"
 CANVAS_COLOR = "black"
-CANVAS_TIME_RESOLUTION = 0.05
+CANVAS_TIME_RESOLUTION = 0.01
 
 SOCK_HOSTA = "192.168.43.128"  # The server's hostname or IP address
 SOCK_PORTA = 65432  # The port used by the server
